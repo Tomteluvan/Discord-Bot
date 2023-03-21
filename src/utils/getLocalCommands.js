@@ -1,8 +1,7 @@
 const path = require('path');
-const consoleLog = require('../events/ready/consoleLog');
 const getAllfiles = require('./getAllFiles');
 
-module.exports = (exceptions) => {
+module.exports = (exceptions = []) => {
     let localCommands = [];
 
     const commandCategories = getAllfiles(
@@ -16,7 +15,7 @@ module.exports = (exceptions) => {
         for (const commandFile of commandFiles) {
             const commandObject = require(commandFile);
 
-            if(exceptions.include(commandObject.name)) {
+            if(exceptions.includes(commandObject.name)) {
                 continue;
             }
             localCommands.push(commandObject);
