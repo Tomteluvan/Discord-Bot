@@ -23,7 +23,7 @@ module.exports = {
     const question = interaction.options.getString('question');
 
     messages.push(
-        {role: "system", content: "Do not give too long answer"},
+        {role: "system", content: "Answer in a nice way and not too long"},
         {role: "user", content: question });
     
     try {
@@ -35,9 +35,7 @@ module.exports = {
 
     const bot_answer = answer.data.choices[0].message.content;
 
-
     await interaction.reply(bot_answer);
-
 
     } catch (error) {
         console.log(`Error in chatGPT command: ${error}`);
