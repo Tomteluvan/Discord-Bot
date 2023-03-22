@@ -23,35 +23,25 @@ module.exports = {
     const question = interaction.options.getString('question');
 
     messages.push(
-        {role: "system", content: "Answer short and in a nice manner"},
+        {role: "system", content: "Do not give too long answer"},
         {role: "user", content: question });
     
     try {
-        const completion = await openai.createChatCompletion({
+        const answer = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: messages,
-            max_tokens: 256,
+            max_tokens: 500,
           });
 
-    const completion_text = completion.data.choices[0].message.content;
-      console.log(completion_text);
-
-      await interaction.reply(completion_text);
+    const bot_answer = answer.data.choices[0].message.content;
 
 
-    //   const response = await openai.createChatCompletion({
-    //     model: "gpt-3.5-turbo",
-    //     messages: messages,
-    //     maxTokens: 256,
-    //     temperature: 0,
-    //   });
+    await interaction.reply(bot_answer);
 
-    //   const answer = response.data.choices[0].message;
-    //   await interaction.reply(answer);
 
     } catch (error) {
-        console.log(`OPENAI ERR: ${error}`);
-      await interaction.reply('An error occurred while processing your request.');
+        console.log(`Error in chatGPT command: ${error}`);
+      await interaction.reply('An error occurred while processing your openAI request.');
     }
   },
 };
