@@ -37,8 +37,7 @@ module.exports = {
 
     const bot_answer = answer.data.choices[0].message.content;
 
-    await interaction.editReply(bot_answer);
-    console.log("The questions asked to the bot: " + question);
+    await interaction.editReply(`${question}\n\n${bot_answer}`);
 
     } catch (error) {
         console.log(`ERR openAI request, ${error}`);
