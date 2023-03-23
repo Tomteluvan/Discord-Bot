@@ -19,11 +19,13 @@ module.exports = {
   //deleted: Boolean,
 
   async callback(client, interaction) {
+    await interaction.deferReply();
+
     const messages = [];    
     const question = interaction.options.getString('question');
 
     messages.push(
-        {role: "system", content: "Answer in a nice way and not too long"},
+        {role: "system", content: "Answer short and friendly"},
         {role: "user", content: question });
     
     try {
@@ -35,11 +37,12 @@ module.exports = {
 
     const bot_answer = answer.data.choices[0].message.content;
 
-    await interaction.reply(bot_answer);
+    await interaction.editReply(bot_answer);
+    console.log("The questions asked to the bot: " + question);
 
     } catch (error) {
-        console.log(`Error in chatGPT command: ${error}`);
-      await interaction.reply('An error occurred while processing your openAI request.');
+        console.log(`ERR openAI request, ${error}`);
+      await interaction.editReply('An error occurred while processing your openAI request.');
     }
   },
 };
